@@ -1,0 +1,43 @@
+<%- include('parts/header') %>
+<%- include('parts/navbar') %>
+
+<div class="container text-center">
+    <h3>Login</h3>
+    <form action="/login" method="POST">
+
+        <input type="email" class="form-control" name="email" placeholder="E-mail">
+        <% let EmailErro = validationErrors.find(erro => erro.param === 'email')  %>
+        <% if(EmailErro){ %>
+        <p class="alert alert-danger">
+            <%= EmailErro.msg %>
+        </p>
+
+        <%}%>
+
+        <input type="password" class="form-control" name="password" placeholder="Password">
+        <% let passwordErro = validationErrors.find(erro => erro.param === 'password')  %>
+        <% if(passwordErro){ %>
+        <p class="alert alert-danger">
+            <%= passwordErro.msg %>
+        </p>
+
+        <%}%>
+        
+        <button type="submit" class="btn btn-primary">Sign in</button>
+
+    </form>
+
+    <% if(authError) { %>
+        <br>
+        <p class="alert alert-danger">
+            <%= authError %>
+        </p>
+        <% } %>
+
+        <br>
+        <div>
+            Don't have account ? <a href="/signup"> signup</a>
+        </div>
+</div>
+
+<%- include('parts/footer') %>

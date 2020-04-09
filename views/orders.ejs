@@ -1,0 +1,74 @@
+<%- include('parts/header') %>
+<%- include('parts/navbar') %>
+
+
+<div class="container py-5">
+    <% if(items.length == 0){%>
+    <p class="alert alert-danger">there no Order</p>
+    <% } else { %>
+    <table class="table">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">no.</th>
+                <th scope="col">product name</th>
+                <th scope="col">price</th>
+                <th scope="col">amount</th>
+                <th scope="col">Total</th>
+                <th scope="col">adddress</th>
+                <th scope="col">status</th>
+
+
+                <th scope="col">option</th>
+            </tr>
+        </thead>
+        <tbody>
+
+
+            <% for(let i = 0 ; i < items.length ; i++){ %>
+            <tr>
+                <th scope="row"><%= i+1 %></th>
+                <td><%= items[i].name %></td>
+                <td><%= items[i].price%></td>
+                <td><%= items[i].amount  %></td>
+                <td><%= items[i].amount * items[i].price %></td>
+                <td><%= items[i].address%></td>
+                <td><%= items[i].status%></td>
+
+
+
+                <form method="POST">
+
+
+                    <td>
+
+
+                        <% if(items[i].status == 'completed' || items[i].status == 'sent' ){ %>
+
+                        <% }else{ %>
+                        <input type="submit" class="btn btn-success" value="Cancel" formaction="/orders/cancel">
+                        <input type="hidden" name='cartId' value="<%= items[i]._id %>">
+                        <input type="hidden" name='userId' value="<%= items[i].userId %>">
+                        <input type="hidden" name='redirectTo' value="/orders">
+
+                        <%  } %>
+
+                        <% if(validationErrors){%>
+                        <p class="alert alert-danger"><%=console.log( validationErrors )%></p>
+                        <% } %>
+                    </td>
+                </form>
+            </tr>
+            <% } %>
+
+            <% } %>
+        </tbody>
+    </table>
+    <form class="text-right" method="POST">
+        <input type="hidden" name="redirectTo" value="/orders">
+        <input type="submit" value="Cancel All" class="btn btn-danger" formaction="/orders/cancelAll">
+
+    </form>
+
+
+    <%- include('parts/footer')%>
+    <%- include('parts/footer')%>

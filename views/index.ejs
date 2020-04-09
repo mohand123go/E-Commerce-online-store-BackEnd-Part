@@ -1,0 +1,58 @@
+<%- include('parts/header') %>
+<%- include('parts/navbar') %>
+
+<div class="container py-5">
+
+  <form action="/" method="GET">
+    <select name="category" class="form-control">
+      <option value="all"> all </option>
+      <option value="clothes"> clothes </option>
+      <option value="womens_accessories"> women's accessories </option>
+    </select>
+    <input type="submit" value="Filter" class="btn btn-primary" />
+  </form>
+  <% if(validationErrors) { %>
+  <p class="alert alert-danger">
+    <%= validationErrors.msg%>
+  </p>
+  <% } %>
+
+  <% if(products.length == 0 ){%>
+  <div class="alert alert-danger">
+    there is no products
+  </div>
+  <% } else { %>
+  <div class="row ">
+    <% for(let product of products) {%>
+    <div class=" col col-4-lg  text-center  ">
+
+      <div class=" card mx-auto " style="width: 18rem;">
+        <img src="<%= product.image_name%>" class="card-img-top" alt="...">
+        <div class="card-body">
+
+          <h5 class="card-title">
+
+            <p>price <%= product.price%></p>
+            <a href="/product/<%= product._id%>"> <%= product.name%></a>
+          </h5>
+          <form action="/cart" method="POST">
+            <input type="hidden" name="name" value="<%= product.name %>">
+            <input type="hidden" name="price" value="<%= product.price %>">
+            <input type="hidden" name="productId" value="<%= product._id %>">
+            <input type="hidden" name="redirectTo" value="/">
+            <input type="number" name="amount" class="form-control">
+            <input class="btn btn-primary" type="submit" value="Add To Cart">
+          </form>
+        </div>
+      </div>
+    </div>
+    <%}%>
+    </div>
+    
+        <%}%>
+
+
+  </div>
+
+
+  <%- include('parts/footer') %>

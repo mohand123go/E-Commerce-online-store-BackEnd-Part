@@ -1,0 +1,67 @@
+<%- include('parts/header') %>
+<%- include('parts/navbar') %>
+<div class="container text-center">
+    <form action="/admin/add" enctype="multipart/form-data" method="POST">
+        <h3>Add Product</h3>
+
+
+        <input type="text" name="name" placeholder="Name" class="form-control" required>
+        <% let nameErro = validationErros.find(err => err.param === 'name') %>
+        <% if (nameErro){%>
+        <p class="alert alert-danger">
+            <%= nameErro.msg %>
+        </p>
+        <%}%>
+
+
+    
+        
+        <input type="number"  name="price" placeholder="Price" class="form-control" required >
+            <% let priceErro = validationErros.find(err => err.param === 'price') %>
+        <% if (priceErro){%>
+        <p class="alert alert-danger">
+            <%= priceErro.msg %>
+        </p>
+        <%}%>
+
+
+        <input type="text" name="description" placeholder="Description" class="form-control" required>
+            <% let descriptionErro = validationErros.find(err => err.param === 'description') %>
+        <% if (descriptionErro){%>
+        <p class="alert alert-danger">
+            <%= descriptionErro.msg %>
+        </p>
+        <%}%>
+
+      
+        
+     
+        <select name="category" class="form-control" required>
+            <option disabled selected> choose a category</option>
+
+            <option value="clothes" autofocus> clothes </option>
+            <option value="womens_accessories"> women's accessories </option>
+        </select>
+        <% let categoryErro = validationErros.find(err => err.param === 'category') %>
+        <% if (categoryErro){%>
+        <p class="alert alert-danger">
+            <%= categoryErro.msg %>
+        </p>
+        <%}%>
+
+
+        <input type="file"  accept='image/*' name="image" placeholder="Select image" class="form-control" required>
+        <% let imageErro = validationErros.find(err => err.param === 'image') %>
+        <% if (imageErro){%>
+        <p class="alert alert-danger">
+            <%= imageErro.msg %>
+        </p>
+        <%}%>
+
+        <input class="btn btn-primary" type="submit" value='Add Product'>
+
+
+    </form>
+</div>
+
+<%- include('parts/footer') %>

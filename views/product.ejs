@@ -1,0 +1,43 @@
+<%- include('parts/header') %>
+<%- include('parts/navbar') %>
+
+
+<div class='container'>
+    <% if(validationErrors) { %>
+    <p class="alert alert-danger">
+        <%= validationErrors.msg%>
+    </p>
+    <% } %>
+    <% if(!product){%>
+    <div class="alert alert-danger">
+        this product is out from stock
+    </div>
+
+    <%} else {%>
+    <div class="row">
+        <div class="col col-12 col-md-6">
+            <img src='/<%= product.image_name %>' width="200" />
+            <form action="/cart" method="POST">
+                <input type="hidden" name="name" value="<%= product.name %>">
+                <input type="hidden" name="price" value="<%= product.price %>">
+                <input type="hidden" name="productId" value="<%= product._id %>">
+                <input type="hidden" name="redirectTo" value="/product/<%= product._id%>">
+                <input type="number" name="amount" class="form-control" />
+                <input type="submit" value="Add to cart" class="btn btn-primary" />
+            </form>
+        </div>
+
+        <div class="col col-12 col-md-6">
+
+            <h3><%= product.name %></h3>
+            <h5>price : <%= product.price %></h5>
+            <p>description: : <%= product.description %></p>
+
+        </div>
+
+    </div>
+
+    <%}%>
+</div>
+
+<%- include('parts/footer') %>

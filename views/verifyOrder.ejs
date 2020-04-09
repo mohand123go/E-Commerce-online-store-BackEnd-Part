@@ -1,0 +1,24 @@
+<%- include('parts/header') %>
+<%- include('parts/navbar') %>
+<div class="container text-center">
+    <form method="POST">
+
+        <% if(orderItem.submit == 'Order' ){ %>
+        <input type="hidden" name="name" value="<%= orderItem.name %>">
+        <input type="hidden" name="price" value="<%= orderItem.price %>">
+        <input type="hidden" name="amount" value="<%= orderItem.amount %>">
+        <h1><%= orderItem.amount %></h1>
+
+        <input type="hidden" name="userId" value="<%= orderItem.userId %>">
+        <input type="hidden" name="productId" value="<%= orderItem.productId %>">
+        <input type="hidden" name="cartId" value="<%= cartId %>">
+        <input type="text" name="address" placeholder="Address">
+        <input type="submit" value="Order" formaction="/orders">
+        <% }else{ %>
+        <input type="text" name="address" placeholder="Address">
+        <input type="submit" value="Order" formaction="/orders/orderAll">
+        <% } %>
+
+    </form>
+</div>
+<%- include('parts/footer') %>

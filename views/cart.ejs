@@ -1,0 +1,77 @@
+<%- include('parts/header')%>
+<%- include('parts/navbar')%>
+
+<div class="container py-5">
+
+
+    <% if(items.length == 0){%>
+    <p class="alert alert-danger">there no items</p>
+    <% } else { %>
+    <table class="table">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">no.</th>
+                <th scope="col">product name</th>
+                <th scope="col">Unite price</th>
+                <th>amount</th>
+                <th scope="col">Total</th>
+                <th scope="col">option</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% for(let i = 0 ; i < items.length ; i++){ %>
+            <tr>
+                <th scope="row"><%= i+1 %></th>
+                <td><%= items[i].name %></td>
+                <td><%= items[i].price%></td>
+
+                <form method="POST">
+                    <td>
+                        <input type="number" name="amount" class="form-control" value='<%= items[i].amount%>'
+                            onkeypress="return event.charCode >= 48"
+                            oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+                            type="number" maxlength="2">
+
+                    </td>
+
+                    <td><%= items[i].amount * items[i].price %></td>
+                    <td>
+
+                        <input type="hidden" name='name' value="<%= items[i].name %>">
+                        <input type="hidden" name='price' value="<%= items[i].price %>">
+                        <input type="hidden" name='cartId' value="<%= items[i]._id %>">
+
+                        <input type="hidden" name='counter' value="<%= i %>">
+
+                        <input type="hidden" name='userId' value="<%= items[i].userId %>">
+                        <input type="hidden" name='productId' value="<%= items[i].productId %>">
+                        <input type="submit" name="submit" class="btn btn-success" value="Order"
+                            formaction="/verifyOrder">
+                        <input type="submit" name="submit" class="btn btn-success" value="Save" formaction="/cart/save">
+                        <input type="submit" name="submit" class="btn btn-danger" value="Delete"
+                            formaction="/cart/delete">
+                </form>
+
+                <% if(validationErrors && i == counter ){%>
+                <p class="alert alert-danger"><%= validationErrors.msg %></p>
+                <% } %>
+
+                </td>
+
+
+            </tr>
+            <% } %>
+
+            <% } %>
+        </tbody>
+    </table>
+
+
+    <form method="POST">
+        <input type="submit" name="submit" value="Delete All" class="btn btn-danger" formaction="/cart/deleteAll">
+        <input type="submit" name="submit" value="order All" class="btn btn-primary" formaction="/verifyOrder/orderAll">
+
+    </form>
+
+
+    <%- include('parts/footer')%>
